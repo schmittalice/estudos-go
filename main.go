@@ -45,32 +45,42 @@ func main() {
 	// }
 	// package main
 
-	fmt.Println("Insira lista de números separados por vírgula")
+	fmt.Println("Insira lista de números separados por vírgula sem espaço")
 
 	var listaDeNumeros string
-	fmt.Scan(&listaDeNumeros)
+	var soma int
+	var maior int
 
+	fmt.Scan(&listaDeNumeros)
 	listaDeNumerosSlice := strings.Split(listaDeNumeros, ",")
 	fmt.Println(listaDeNumerosSlice)
-
-	//fmt.Println("Resultado:", listaDeNumerosSlice[0]+listaDeNumerosSlice[1])
+	fmt.Println("Resultado:", listaDeNumerosSlice[0]+listaDeNumerosSlice[1])
 
 	listaNumerosInt := make([]int, 0, len(listaDeNumeros))
-	var soma int
 
 	for _, numeroStr := range listaDeNumerosSlice {
 
-		// 1. converter num str para inteiro
-		// 2. ver se deu erro na conversão
-		// 3. se deu erro, imprimir uma mensagem
-		// 4. se deu erro, podeos usar continue para pular para o próximo número
-		// 5. fazer soma ou armazenar o número na lista
+		numeroInt, err := strconv.Atoi(numeroStr)
 
+		if err != nil {
+			fmt.Printf("erro ao fazer conversão de %s: %s\n", numeroStr, err.Error())
+
+			//fmt.Println("pulando para o próximo número")
+
+			continue
+			//break
+			//return
+		}
+
+		if maior < numeroInt {
+			maior = numeroInt
+		}
+
+		soma += numeroInt
+
+		listaNumerosInt = append(listaNumerosInt, numeroInt)
 	}
-
-	listaDeNumeros, err := strconv.Atoi(listaNumerosInt); err == nil
-
-	v := "10"
-	if s, err := strconv.Atoi(v); err == nil {
-		fmt.Printf("%T, %v", s, s)
+	fmt.Println(listaNumerosInt)
+	fmt.Println(soma)
+	fmt.Println("Maior número da lista:", maior)
 }
